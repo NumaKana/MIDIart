@@ -1,12 +1,15 @@
-name: Deploy to Firebase Hosting on merge
-'on':
-  push:
-    branches:
-      - main
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
 jobs:
-  build_and_deploy:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - run: npm install && npm run build
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g bats
+      - run: bats -v
         env:
             REACT_APP_ONGAQ_JS_KEY: ${{secrets.REACT_APP_ONGAQ_JS_KEY}}
