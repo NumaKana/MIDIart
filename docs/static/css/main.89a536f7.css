@@ -1,0 +1,2 @@
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;margin:0}code{font-family:source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace}.button.start:before{content:"start"}.button.pause:before{content:"pause"}.button:not(.start):not(.pause):before{content:"...loading"}.button.pause:hover,.button.start:hover{opacity:.7}
+/*# sourceMappingURL=main.89a536f7.css.map*/
