@@ -8,9 +8,6 @@ const FileInput = () => {
     const theme = useTheme();
     const { uploadedfile, handleChangeFile } = useEstimateInfo();
 
-    var uri = new URL(window.location.href);
-    console.log(uri.hostname)
-
     return (
         <>
         <label htmlFor="upload-button-file" theme={theme}>
