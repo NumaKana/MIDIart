@@ -9,12 +9,11 @@ export const Theme = createTheme({
             main: "#f8fcff",
         },
         secondary: {
-            main: blue[900],
+            main: blue[200],
             sub: orange[500],
         },
         background: {
             default: "#f8fcff",
-            planUnSelected: "#aaa",
         },
         text: {
             main: "#000",
@@ -36,7 +35,7 @@ export const Theme = createTheme({
                 height: 1.5vh;
             },
             ::-webkit-scrollbar-thumb {
-                background-color: ${blue[900]};
+                background-color: ${blue[200]};
                 border-radius: 10px;
             },
             ::-webkit-scrollbar-track {

@@ -12,15 +12,6 @@ code {
     monospace;
 }
 
-.button.start:before {
-  content: "start"
-}
-.button.pause:before {
-  content: "pause"
-}
-.button:not(.start):not(.pause):before {
-  content: "...loading"
-}
 .button.start:hover,
 .button.pause:hover {
   opacity: 0.7;

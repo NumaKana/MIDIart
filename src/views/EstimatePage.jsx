@@ -1,19 +1,22 @@
 import React from 'react'
 import { useTheme, Box } from '@mui/material'
-import ShowSlider from '../components/ShowSlider';
 import ShowPianoroll from '../components/ShowPianoroll';
 import FileInput from '../components/FileInput';
+import DrawImage from '../components/DrawImage';
+import Sidebar from '../components/Sidebar';
+import useEstimateInfo from '../hooks/useEstimateInfo';
 
 
 const EstimatePage = () => {
 
     const theme = useTheme();
+    const {toggle} = useEstimateInfo();
 
     return (
-        <Box theme={theme} padding="30px">
-        <FileInput />
-        <ShowPianoroll />
-        <ShowSlider />
+        <Box theme={theme} margin="0 50px">
+            <Sidebar />
+            {toggle === "draw" ? <DrawImage /> : <FileInput />}
+            <ShowPianoroll />
         </Box>
     )
 }

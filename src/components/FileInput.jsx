@@ -1,15 +1,15 @@
 import React from 'react'
-import { useTheme, Button, Typography } from '@mui/material'
+import { useTheme, Button, Typography, Box } from '@mui/material'
 import useEstimateInfo from "../hooks/useEstimateInfo"
 
 
 const FileInput = () => {
 
     const theme = useTheme();
-    const { uploadedfile, handleChangeFile } = useEstimateInfo();
+    const { uploadedfile, handleChangeFile, drawerWidth } = useEstimateInfo();
 
     return (
-        <>
+        <Box sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, margin: "0 0 0 auto" }}>
         <label htmlFor="upload-button-file" theme={theme}>
             <input
                 accept="image/*"
@@ -21,7 +21,7 @@ const FileInput = () => {
                 onChange={(e) => handleChangeFile({file:e.target.files[0]})}
                 style={{display: "none"}}
             />
-            <Button variant="contained" component="span">
+            <Button variant="outlined" component="span">
                 Upload File
             </Button>
         </label>
@@ -29,9 +29,12 @@ const FileInput = () => {
             <Typography>画像ファイルをアップロードしてください</Typography>
         }
         {uploadedfile !== "" &&
-            <Typography>{uploadedfile.value}</Typography>
+            <Box>
+                <Typography>{uploadedfile.value}</Typography>
+            </Box>
         }
-        </>
+        <img id="img" alt='no img'></img>
+        </Box>
     )
 }
 
