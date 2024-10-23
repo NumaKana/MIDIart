@@ -13,12 +13,15 @@ const useEstimateInfo = () => {
         cellheight, setcellHeight,
         cellwidth, setcellWidth,
         scale, setScale,
+        key, setKey,
         id, setId,
         toggle, setToggle,
         drawerWidth,
         btn, setBtn,
         length_slider, setLengthSlider,
-        notes, setNotes
+        notes, setNotes,
+        music, setMusic,
+        isPlaying, setIsPlaying
     } = useContext(FormContext);
 
     const handleChangeFile = ({file}) => {
@@ -33,8 +36,16 @@ const useEstimateInfo = () => {
         setLengthSlider(num)
     }
 
-    const handleScaleChange = (value) => {
-        setScale(value)
+    const handleScaleChange = (value, num) => {
+        let tmp = [...scale]
+        tmp[num] = value
+        setScale(tmp)
+    }
+
+    const handleKeyChange = (value, num) => {
+        let tmp = [...key]
+        tmp[num] = value
+        setKey(tmp)
     }
 
     const handleToggle = (val, n) => {
@@ -53,9 +64,11 @@ const useEstimateInfo = () => {
         cellheight, setcellHeight,
         cellwidth, setcellWidth,
         scale, setScale,
+        key, setKey,
         handleChangeFile,
         handleSlider,
         handleScaleChange,
+        handleKeyChange,
         handleToggle,
         id, setId,
         toggle, setToggle,
@@ -63,7 +76,9 @@ const useEstimateInfo = () => {
         btn, setBtn,
         length_slider, setLengthSlider,
         handleLengthSlider,
-        notes, setNotes
+        notes, setNotes,
+        music, setMusic,
+        isPlaying, setIsPlaying
     }
 }
 

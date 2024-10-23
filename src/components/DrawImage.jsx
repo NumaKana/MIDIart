@@ -147,9 +147,9 @@ const DrawImage = () => {
                 <Slider 
                     value={brushSize}
                     defaultValue={0}
-                    min={0}
+                    min={10}
                     step={0.1}
-                    max={10} 
+                    max={100} 
                     aria-label="BrushSlider"
                     onChange={(e) => handleSize(e.target.value)} 
                 />

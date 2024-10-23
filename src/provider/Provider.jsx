@@ -6,8 +6,9 @@ export const FormProvider = ({ children }) => {
 
     const [uploadedfile, setUploadedfile] = useState("");
     const [slider, setSlider] = useState(0);
-    const [length_slider, setLengthSlider] = useState(0);
-    const [scale, setScale] = useState("Cmajor");
+    const [length_slider, setLengthSlider] = useState(0.25);
+    const [scale, setScale] = useState(Array(4).fill("major"));
+    const [key, setKey] = useState(Array(4).fill(0));
     const [canvas, setCanvas] = useState(null);
     const [context, setContext] = useState(null);
     const [w, setW] = useState(0);
@@ -16,9 +17,11 @@ export const FormProvider = ({ children }) => {
     const [cellwidth, setcellWidth] = useState(0);
     const [playheadctx, setPlayheadctx] = useState(null);
     const [id, setId] = useState("edge");
-    const [toggle, setToggle] = useState("upload");
+    const [toggle, setToggle] = useState("draw");
     const [btn, setBtn] = useState("...loading")
     const [notes, setNotes] = useState([])
+    const [music, setMusic] = useState([])
+    const [isPlaying, setIsPlaying] = useState(false)
 
     // 各種canvasオブジェクト
     const [drawCvs, setDrawCvs] = useState(null)
@@ -60,6 +63,7 @@ export const FormProvider = ({ children }) => {
         cellheight, setcellHeight,
         cellwidth, setcellWidth,
         scale, setScale,
+        key, setKey,
         id, setId,
         toggle, setToggle,
         drawerWidth,
@@ -77,7 +81,9 @@ export const FormProvider = ({ children }) => {
         inputType, setInputType,
         brushSize, setBrushSize,
         top, left, width, height, 
-        notes, setNotes
+        notes, setNotes,
+        music, setMusic,
+        isPlaying, setIsPlaying
     };
 
     return (

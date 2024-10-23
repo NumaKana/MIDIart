@@ -1,5 +1,19 @@
 import useEstimateInfo from "./useEstimateInfo";
 
+let test_music = []
+
+const bpm = 120;
+
+let audioContext
+// window.AudioContext = window.AudioContext || window.webkitAudioContext;
+// // let oscillator;
+let masterGain
+// masterGain.gain.value = 0.1;
+// masterGain.connect(audioContext.destination);
+
+let isPlaying = false
+
+
 const usePianoroll = () => {
     const { 
         slider, 
@@ -9,14 +23,16 @@ const usePianoroll = () => {
         cellwidth, 
         h, 
         w, 
-        scale, 
+        scale,
+        key,
         btn, 
         setBtn, 
         length_slider,
         notes, setNotes,
+        music, setMusic,
     } = useEstimateInfo();
     let head_x = 0
-    let dx = 2
+    let dx = 1
     let timer = ""
 
     const drawNote = (ctx, note, start, end, selected=false) => {
@@ -65,7 +81,7 @@ const usePianoroll = () => {
 
     const move = () => {
         if(!timer){
-            timer = setInterval(movePlayHead, 10);
+            timer = setInterval(movePlayHead, bpm / 60 / cellwidth * 1000);
         }else{
             clearInterval(timer)
             timer = ""
@@ -114,13 +130,13 @@ const usePianoroll = () => {
         return false;
         }
 
-    const check = (ongaq) => {
-        setInterval(() => {
-            if(!ongaq.isPlaying){
-                clearInterval(timer)
-            }
-        },10)
-    }
+    // const check = (ongaq) => {
+    //     setInterval(() => {
+    //         if(!ongaq.isPlaying){
+    //             clearInterval(timer)
+    //         }
+    //     },10)
+    // }
 
     const nearest = (array, value) => {
         return array.reduce((a, b) => {
@@ -136,32 +152,32 @@ const usePianoroll = () => {
         });
     } 
 
-    const Midinum2Note = (num) => {
-        const scale = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
-        const idx = num % 12
-        const position = Math.floor((num - 12) / 12)
+    // const Midinum2Note = (num) => {
+    //     const scale = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+    //     const idx = num % 12
+    //     const position = Math.floor((num - 12) / 12)
 
-        if(position > 0 && position < 5){
-            let Note = ""
-            if(scale[idx].length === 2){
-                Note = scale[idx+1] + position + "b"
-            }else{
-                Note = scale[idx] + position
-            }
-            return Note
-        }else{
-            return ""
-        }
+    //     if(position > 0 && position < 5){
+    //         let Note = ""
+    //         if(scale[idx].length === 2){
+    //             Note = scale[idx+1] + position + "b"
+    //         }else{
+    //             Note = scale[idx] + position
+    //         }
+    //         return Note
+    //     }else{
+    //         return ""
+    //     }
         
-    }
+    // }
 
-    const BeatMeasure = (i) => {
-        let c = i / 4
-        const measure = Math.floor(c)
-        const beat = (i - measure * 4) * 4
+    // const BeatMeasure = (i) => {
+    //     let c = i / 4
+    //     const measure = Math.floor(c)
+    //     const beat = (i - measure * 4) * 4
 
-        return [beat, measure]
-    }
+    //     return [beat, measure]
+    // }
 
     const ImgtoGray = (img_data) => {
         const cv2 = window.cv
@@ -195,6 +211,44 @@ const usePianoroll = () => {
         return [img_w, img_h]
     } 
 
+    const Midi2Hz = (num) => {
+        return 440 * (2 ** ((num - 69) / 12))
+    }
+
+    const Beat2Time = (num) => {
+        return ( bpm / 60 ) * num
+    }
+
+    const makeMusic = (audioContext) => {
+        let start = audioContext.currentTime
+        let hz = 0
+        let time = 0
+        let test = []
+
+        for(let i=0; i<test_music.length; i++){
+            const oscillator = audioContext.createOscillator();
+            oscillator.type = "sine"; // sine, square, sawtooth, triangleがある
+            let gain = new GainNode(audioContext)
+            gain.gain.setValueAtTime(0.0,start)
+
+            hz = Midi2Hz(test_music[i].note)
+            time = Beat2Time(test_music[i].time)
+            oscillator.frequency.setValueAtTime(hz, start + time)
+            gain.gain.setValueAtTime(0.3, start+time)
+
+            test.push({"hz": hz, "time": time})
+
+            oscillator.connect(gain);
+            gain.connect(masterGain);
+            oscillator.start = oscillator.start || oscillator.noteOn; //互換対応
+            oscillator.start();
+            oscillator.stop(start + time + Beat2Time(test_music[i].len))
+        }
+        console.log(test)
+        
+        // return oscillator
+    }
+
     const ImgtoMidiart = (id, img_w, img_h) => {
 
         const edgeCanvas = document.getElementById(id)
@@ -212,39 +266,27 @@ const usePianoroll = () => {
             img_edge.push(tmp)
         }
 
-        const ongaq = new window.Ongaq ({
-            api_key:process.env.REACT_APP_Ongaq_JS_KEY,
-            bpm: 120,
-            volume: 70,
-            onReady: () => {
-                const button = document.getElementById("button")
-                setBtn("start")
-                button.onclick = () => {
-                    check(ongaq)
-                    if (ongaq.params.isPlaying) {
-                        console.log("stop")
-                        ongaq.pause()
-                        check(ongaq)
-                        move()
-                        setBtn("pause")
-                    } else {
-                        movePlayHead()
-                        console.log("start")
-                        ongaq.start()
-                        move()  
-                        setBtn("start")
-                    }
-                }
+        const button = document.getElementById("button")
+        
+        button.onclick = () => {
+            move()
+            // 再生中なら二重に再生されないようにする
+            if (isPlaying) {
+                // oscillator.stop();
+                masterGain.gain.value = 0.0;
+                masterGain.connect(audioContext.destination);
+                isPlaying = false;
+            }else{
+                audioContext = new AudioContext();
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                // let oscillator;
+                masterGain = audioContext.createGain();
+                masterGain.gain.value = 0.1;
+                masterGain.connect(audioContext.destination);
+                makeMusic(audioContext)
+                isPlaying = true;
             }
-        })
-
-        const instrument = new window.Part({
-            sound: "my_piano",
-            measure: Math.floor(img_w / 16),
-            repeat: false,
-            maxLap: 0,
-            beatsInMeasure: 16
-        })
+        };
 
         const maj_chord = [0, 4, 7]
         const min_chord = [0, 3, 7]
@@ -252,21 +294,24 @@ const usePianoroll = () => {
         const seventh_chord = [0, 4, 7, 10]
 
         let use_scale = []
-        if(scale === "Cmajor"){
-            use_scale = maj_chord
-        }else if(scale === "Cminor"){
-            use_scale = min_chord
-        }else if(scale === "Cpenta"){
-            use_scale = penta_chord
-        }else if(scale === "C7"){
-            use_scale = seventh_chord
-        }
+        for(let i=0; i<4; i++){
+            if(scale[i] === "major"){
+                use_scale.push(maj_chord)
+            }else if(scale[i] === "minor"){
+                use_scale.push(min_chord)
+            }else if(scale[i] === "penta"){
+                use_scale.push(penta_chord)
+            }else if(scale[i] === "seventh"){
+                use_scale.push(seventh_chord)
+            }
+        }  
 
         const l2 = [-1, 0, 1, 2]
 
         var luminance = ""
 
         let top = 999
+        let tmp = []
 
         for(let j=0;j<img_h;j++){
             for(let i=0; i<img_w; i++){
@@ -286,8 +331,20 @@ const usePianoroll = () => {
                     let p = img_h - j + 24 // + top
                     let q = 0
                     if(Math.random() < slider){
-                        // #C
-                        q = nearest(use_scale, p % 12) + 12 * Math.floor(p / 12)
+                        if(i < img_w * 0.25){
+                            // C
+                            q = nearest(use_scale[0].map(x => x + key[0]), p % 12) + 12 * Math.floor(p / 12)
+                        }else if(i < img_w * 0.5){
+                            // Dm
+                            q = nearest(use_scale[1].map(x => x + key[1]), p % 12) + 12 * Math.floor(p / 12)
+                        }else if(i < img_w * 0.75){
+                            // G7
+                            q = nearest(use_scale[2].map(x => x + key[2]), p % 12) + 12 * Math.floor(p / 12)
+                        }else{
+                            // C
+                            q = nearest(use_scale[3].map(x => x + key[3]), p % 12) + 12 * Math.floor(p / 12)
+                        }
+                        
                     }else{
                         q = p
                     }
@@ -301,34 +358,17 @@ const usePianoroll = () => {
                         }
                     }
 
-                    const time = BeatMeasure(t)
-                    instrument.add( new window.Filter ({
-                        key: Midinum2Note(q),
-                        length: length_slider *len,
-                        active: (beat, measure) => beat === time[0] && measure === time[1]
-                    }) )
+                    
+                    tmp.push({"note":q+24, "time": t, "len": 0.25*length_slider*len})         
                     drawNote(context, img_h-q+24, t, t+0.25*length_slider*len)
 
                     i += len
                 }
             }
         }
-        ongaq.add(instrument)
-
-        // const drum = new window.Part({
-        //     sound: "small_cube_drums",
-        //     measure: Math.floor(img_w / 16),
-        //     maxLap: 0,
-        //     repeat: false,
-        //     beatsInMeasure: 16
-        // })  
-
-        // drum.add(new window.Filter ({
-        //     key: "kick",
-        //     active: beat => beat === 0
-        // }) )
-
-        // ongaq.add(drum)
+        // setMusic(tmp)
+        test_music = tmp
+        console.log(test_music)
 
     }
     

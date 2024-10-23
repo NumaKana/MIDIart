@@ -11,16 +11,25 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
 import useEstimateInfo from '../hooks/useEstimateInfo';
+import { TextField } from '@mui/material';
 
 function ResponsiveDrawer(props) {
   const { window } = props;
 
-  const {toggle, handleToggle, slider, handleSlider, length_slider, handleLengthSlider, scale, handleScaleChange, drawerWidth} = useEstimateInfo();
+  const {
+    toggle, 
+    handleToggle, 
+    slider, handleSlider, 
+    length_slider, handleLengthSlider, 
+    key, handleKeyChange, 
+    scale, handleScaleChange, 
+    drawerWidth
+  } = useEstimateInfo();
 
   const drawer = (
     <div style={{margin: "20px auto"}}>
         <Box margin="16px">
-            <Typography>Input Image</Typography>
+            <Typography>絵のつくりかた</Typography>
             <ToggleButtonGroup
                 value={toggle}
                 exclusive
@@ -28,10 +37,10 @@ function ResponsiveDrawer(props) {
                 aria-label="Image"
                 >
                 <ToggleButton value="draw" aria-label="draw">
-                    <Typography>draw</Typography>
+                    <Typography>かく</Typography>
                 </ToggleButton>
                 <ToggleButton value="upload" aria-label="upload">
-                    <Typography>upload</Typography>
+                    <Typography>画像をアップロード</Typography>
                 </ToggleButton>
             </ToggleButtonGroup>
         </Box>
@@ -66,18 +75,47 @@ function ResponsiveDrawer(props) {
 
         <Box margin="16px">
             <Typography>使用するコード/スケール</Typography>
-            <Select
-                labelId="select-scale"
-                id="scale-select"
-                value={scale}
-                label="scale"
-                onChange={(e) => handleScaleChange(e.target.value)}
-            >
-                <MenuItem value="Cmajor">C major</MenuItem>
-                <MenuItem value="Cminor">C minor</MenuItem>
-                <MenuItem value="Cpenta">C pentatonic</MenuItem>
-                <MenuItem value="C7">C7</MenuItem>
-            </Select>
+            {
+            Array(4).fill(0).map((val, i) => {
+              return(
+                <div key={"choose" + i}>
+                  <Typography>{i+1}</Typography>
+                  <Select
+                      labelId="select-scale"
+                      id="scale-select"
+                      defaultValue={key[i]}
+                      label="key"
+                      onChange={(e) => handleKeyChange(e.target.value, i)}
+                  >
+                      <MenuItem value={0}>C</MenuItem>
+                      <MenuItem value={1}>Db</MenuItem>
+                      <MenuItem value={2}>D</MenuItem>
+                      <MenuItem value={3}>Eb</MenuItem>
+                      <MenuItem value={4}>E</MenuItem>
+                      <MenuItem value={5}>F</MenuItem>
+                      <MenuItem value={6}>Gb</MenuItem>
+                      <MenuItem value={7}>G</MenuItem>
+                      <MenuItem value={8}>Ab</MenuItem>
+                      <MenuItem value={9}>A</MenuItem>
+                      <MenuItem value={10}>Bb</MenuItem>
+                      <MenuItem value={11}>B</MenuItem>
+                  </Select>
+                  <Select
+                      labelId="select-scale"
+                      id="scale-select"
+                      defaultValue={scale[i]}
+                      label="scale"
+                      onChange={(e) => handleScaleChange(e.target.value, i)}
+                  >
+                      <MenuItem value="major">メジャー</MenuItem>
+                      <MenuItem value="minor">マイナー</MenuItem>
+                      <MenuItem value="penta">ペンタ</MenuItem>
+                      <MenuItem value="seventh">セブンス</MenuItem>
+                  </Select>
+                </div>
+              )
+            })
+            }
         </Box>
     </div>
   );

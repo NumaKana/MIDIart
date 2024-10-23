@@ -18,18 +18,16 @@ const ShowPianoroll = () => {
     const {
         slider, 
         scale,
+        key,
         uploadedfile, 
-        canvas, 
-        setCanvas, 
-        context, 
-        setContext, 
+        canvas, setCanvas, 
+        context,setContext, 
         setPlayheadctx, 
         setH, 
         setW, 
         setcellHeight, 
         setcellWidth, 
-        id, 
-        setId,
+        id, setId,
         drawerWidth,
         btn,
         length_slider
@@ -114,52 +112,7 @@ const ShowPianoroll = () => {
             drawPianoGrid(context);
             ImgtoMidiart("draw", 96, 48) 
         }
-    },[slider])
-
-    useEffect(()=>{
-        if(uploadedfile){
-            resizeCanvasToDisplaySize(canvas); 
-            drawPianoGrid(context);
-            
-            let img_Element = document.getElementById("img")
-            img_Element.src = URL.createObjectURL(uploadedfile)
-
-            img_Element.onload = () => {
-                const arr = ImgtoGray(img_Element)
-                ImgtoMidiart("edge", arr[0], arr[1])  
-            }
-
-            drawPlayHead(0);
-
-        }else if(id === "draw"){
-            resizeCanvasToDisplaySize(canvas); 
-            drawPianoGrid(context);
-            ImgtoMidiart("draw", 96, 48) 
-        }
-    },[length_slider])
-
-    useEffect(()=>{
-        if(uploadedfile){
-            resizeCanvasToDisplaySize(canvas); 
-            drawPianoGrid(context);
-            
-            let img_Element = document.getElementById("img")
-            img_Element.src = URL.createObjectURL(uploadedfile)
-
-            img_Element.onload = () => {
-                const arr = ImgtoGray(img_Element)
-                ImgtoMidiart("gray",arr[0], arr[1]) 
-            }
-
-            drawPlayHead(0);
-
-        }else if(id === "draw"){
-            resizeCanvasToDisplaySize(canvas); 
-            drawPianoGrid(context);
-            ImgtoMidiart("draw", 96, 48) 
-        }
-    },[scale])
-
+    },[slider, length_slider, scale[0], key])
 
     return (
         <Box theme={theme} sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, margin: "0 0 0 auto" }}>
