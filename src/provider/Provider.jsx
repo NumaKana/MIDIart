@@ -18,7 +18,7 @@ export const FormProvider = ({ children }) => {
     const [playheadctx, setPlayheadctx] = useState(null);
     const [id, setId] = useState("edge");
     const [toggle, setToggle] = useState("draw");
-    const [btn, setBtn] = useState("...loading")
+    const [btn, setBtn] = useState("再生/停止")
     const [notes, setNotes] = useState([])
     const [music, setMusic] = useState([])
     const [isPlaying, setIsPlaying] = useState(false)

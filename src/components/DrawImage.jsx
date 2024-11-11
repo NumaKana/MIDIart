@@ -138,7 +138,7 @@ const DrawImage = () => {
                 >
                     <FormControlLabel value="1" control={<Radio />} label="ペン" />
                     <FormControlLabel value="2" control={<Radio />} label="直線" />
-                    <FormControlLabel value="3" control={<Radio />} label="短径" />
+                    <FormControlLabel value="3" control={<Radio />} label="四角" />
                     <FormControlLabel value="4" control={<Radio />} label="円" />
                 </RadioGroup>
             </FormControl>

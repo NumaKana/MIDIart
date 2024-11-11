@@ -46,7 +46,7 @@ function ResponsiveDrawer(props) {
         </Box>
 
         <Box margin="16px">
-            <Typography>スケールとの適合度</Typography>
+            <Typography>スケールと合わせる</Typography>
             <Slider 
                     value={slider}
                     defaultValue={0}
@@ -74,7 +74,7 @@ function ResponsiveDrawer(props) {
         </Box>
 
         <Box margin="16px">
-            <Typography>使用するコード/スケール</Typography>
+            <Typography>使用する和音/スケール</Typography>
             {
             Array(4).fill(0).map((val, i) => {
               return(
