@@ -46,7 +46,7 @@ function ResponsiveDrawer(props) {
         </Box>
 
         <Box margin="16px">
-            <Typography>スケールと合わせる</Typography>
+            <Typography>響きのきれいさ</Typography>
             <Slider 
                     value={slider}
                     defaultValue={0}
@@ -63,7 +63,7 @@ function ResponsiveDrawer(props) {
             <Typography>音符の長さ</Typography>
             <Slider 
                     value={length_slider}
-                    defaultValue={0}
+                    defaultValue={1.0}
                     min={0.25}
                     step={0.01}
                     max={4} 

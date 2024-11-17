@@ -6,9 +6,9 @@ export const FormProvider = ({ children }) => {
 
     const [uploadedfile, setUploadedfile] = useState("");
     const [slider, setSlider] = useState(0);
-    const [length_slider, setLengthSlider] = useState(0.25);
-    const [scale, setScale] = useState(Array(4).fill("major"));
-    const [key, setKey] = useState(Array(4).fill(0));
+    const [length_slider, setLengthSlider] = useState(1.0);
+    const [scale, setScale] = useState(["major", "major", "seventh", "major"]);
+    const [key, setKey] = useState([0, 5, 7, 0]);
     const [canvas, setCanvas] = useState(null);
     const [context, setContext] = useState(null);
     const [w, setW] = useState(0);
