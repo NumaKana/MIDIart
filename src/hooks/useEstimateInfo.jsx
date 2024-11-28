@@ -21,7 +21,8 @@ const useEstimateInfo = () => {
         length_slider, setLengthSlider,
         notes, setNotes,
         music, setMusic,
-        isPlaying, setIsPlaying
+        isPlaying, setIsPlaying,
+        bpm, setBpm
     } = useContext(FormContext);
 
     const handleChangeFile = ({file}) => {
@@ -49,8 +50,11 @@ const useEstimateInfo = () => {
     }
 
     const handleToggle = (val, n) => {
-        console.log(n)
         setToggle(n)
+    }
+
+    const handleBpm = (n) => {
+        setBpm(n)
     }
 
     return {
@@ -78,7 +82,9 @@ const useEstimateInfo = () => {
         handleLengthSlider,
         notes, setNotes,
         music, setMusic,
-        isPlaying, setIsPlaying
+        isPlaying, setIsPlaying,
+        bpm, setBpm,
+        handleBpm,
     }
 }
 

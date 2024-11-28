@@ -22,6 +22,7 @@ export const FormProvider = ({ children }) => {
     const [notes, setNotes] = useState([])
     const [music, setMusic] = useState([])
     const [isPlaying, setIsPlaying] = useState(false)
+    const [bpm, setBpm] = useState(120);
 
     // 各種canvasオブジェクト
     const [drawCvs, setDrawCvs] = useState(null)
@@ -83,7 +84,8 @@ export const FormProvider = ({ children }) => {
         top, left, width, height, 
         notes, setNotes,
         music, setMusic,
-        isPlaying, setIsPlaying
+        isPlaying, setIsPlaying,
+        bpm, setBpm
     };
 
     return (

@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/MIDIart/static/css/main.6e87786a.css",
-    "main.js": "/MIDIart/static/js/main.5abbaa3e.js",
+    "main.js": "/MIDIart/static/js/main.5a1d1f9a.js",
     "static/js/453.bdd43286.chunk.js": "/MIDIart/static/js/453.bdd43286.chunk.js",
     "index.html": "/MIDIart/index.html",
     "main.6e87786a.css.map": "/MIDIart/static/css/main.6e87786a.css.map",
-    "main.5abbaa3e.js.map": "/MIDIart/static/js/main.5abbaa3e.js.map",
+    "main.5a1d1f9a.js.map": "/MIDIart/static/js/main.5a1d1f9a.js.map",
     "453.bdd43286.chunk.js.map": "/MIDIart/static/js/453.bdd43286.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6e87786a.css",
-    "static/js/main.5abbaa3e.js"
+    "static/js/main.5a1d1f9a.js"
   ]
 }

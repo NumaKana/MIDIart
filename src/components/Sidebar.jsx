@@ -23,7 +23,8 @@ function ResponsiveDrawer(props) {
     length_slider, handleLengthSlider, 
     key, handleKeyChange, 
     scale, handleScaleChange, 
-    drawerWidth
+    drawerWidth,
+    bpm, handleBpm
   } = useEstimateInfo();
 
   const drawer = (
@@ -69,6 +70,20 @@ function ResponsiveDrawer(props) {
                     max={4} 
                     aria-label="Lengthslider"
                     onChange={(e) => handleLengthSlider(e.target.value)}
+                    sx={{width: drawerWidth*0.8, margin: "o auto"}}
+                />
+        </Box>
+
+        <Box margin="16px">
+            <Typography>はやさ</Typography>
+            <Slider 
+                    value={bpm}
+                    defaultValue={120}
+                    min={100}
+                    step={1}
+                    max={300} 
+                    aria-label="BpmSlider"
+                    onChange={(e) => handleBpm(e.target.value)}
                     sx={{width: drawerWidth*0.8, margin: "o auto"}}
                 />
         </Box>
