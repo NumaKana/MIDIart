@@ -25,11 +25,8 @@ const usePianoroll = () => {
         w, 
         scale,
         key,
-        btn, 
-        setBtn, 
         length_slider,
         notes, setNotes,
-        music, setMusic,
         bpm
     } = useEstimateInfo();
     let head_x = 0
@@ -82,7 +79,7 @@ const usePianoroll = () => {
 
     const move = () => {
         if(!timer){
-            timer = setInterval(movePlayHead, bpm / 60 / cellwidth * 1000);
+            timer = setInterval(movePlayHead, ((60 / bpm) / cellwidth) * 1000);
         }else{
             clearInterval(timer)
             timer = ""
@@ -131,14 +128,6 @@ const usePianoroll = () => {
         return false;
         }
 
-    // const check = (ongaq) => {
-    //     setInterval(() => {
-    //         if(!ongaq.isPlaying){
-    //             clearInterval(timer)
-    //         }
-    //     },10)
-    // }
-
     const nearest = (array, value) => {
         return array.reduce((a, b) => {
             let aDiff = Math.abs(a - value);
@@ -153,32 +142,6 @@ const usePianoroll = () => {
         });
     } 
 
-    // const Midinum2Note = (num) => {
-    //     const scale = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
-    //     const idx = num % 12
-    //     const position = Math.floor((num - 12) / 12)
-
-    //     if(position > 0 && position < 5){
-    //         let Note = ""
-    //         if(scale[idx].length === 2){
-    //             Note = scale[idx+1] + position + "b"
-    //         }else{
-    //             Note = scale[idx] + position
-    //         }
-    //         return Note
-    //     }else{
-    //         return ""
-    //     }
-        
-    // }
-
-    // const BeatMeasure = (i) => {
-    //     let c = i / 4
-    //     const measure = Math.floor(c)
-    //     const beat = (i - measure * 4) * 4
-
-    //     return [beat, measure]
-    // }
 
     const ImgtoGray = (img_data) => {
         const cv2 = window.cv
@@ -217,7 +180,7 @@ const usePianoroll = () => {
     }
 
     const Beat2Time = (num) => {
-        return ( bpm / 60 ) * num
+        return ( 60 / bpm ) * num
     }
 
     const makeMusic = (audioContext) => {
@@ -244,10 +207,8 @@ const usePianoroll = () => {
             oscillator.start = oscillator.start || oscillator.noteOn; //互換対応
             oscillator.start();
             oscillator.stop(start + time + Beat2Time(test_music[i].len))
-        }
-        console.log(test)
-        
-        // return oscillator
+        }     
+        isPlaying = false;   
     }
 
     const ImgtoMidiart = (id, img_w, img_h) => {
@@ -311,7 +272,6 @@ const usePianoroll = () => {
 
         var luminance = ""
 
-        let top = 999
         let tmp = []
 
         for(let j=0;j<img_h;j++){
@@ -367,10 +327,7 @@ const usePianoroll = () => {
                 }
             }
         }
-        // setMusic(tmp)
         test_music = tmp
-        console.log(test_music)
-
     }
     
     return {

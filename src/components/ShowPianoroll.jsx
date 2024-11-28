@@ -30,7 +30,8 @@ const ShowPianoroll = () => {
         id, setId,
         drawerWidth,
         btn,
-        length_slider
+        length_slider,
+        bpm
     } = useEstimateInfo();
 
     const {
@@ -86,9 +87,7 @@ const ShowPianoroll = () => {
                 const arr = ImgtoGray(img_Element)
                 ImgtoMidiart("edge",arr[0], arr[1])  
             }
-
             drawPlayHead(0);
-
         }
     },[uploadedfile])
 
@@ -112,7 +111,7 @@ const ShowPianoroll = () => {
             drawPianoGrid(context);
             ImgtoMidiart("draw", 96, 48) 
         }
-    },[slider, length_slider, scale[0], key])
+    },[slider, length_slider, scale[0], key, bpm])
 
     return (
         <Box theme={theme} sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, margin: "0 0 0 auto" }}>

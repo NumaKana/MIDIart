@@ -26,7 +26,11 @@ const useEstimateInfo = () => {
     } = useContext(FormContext);
 
     const handleChangeFile = ({file}) => {
-        setUploadedfile(file);
+        if(file){
+            setUploadedfile(file);
+        }else{
+            setUploadedfile("")
+        }
     }
 
     const handleSlider = (num) => {

@@ -17,6 +17,7 @@ const DrawImage = () => {
         setId, 
         canvas, 
         context, 
+        handleChangeFile
      } = useEstimateInfo();
     const { ImgtoMidiart, resizeCanvasToDisplaySize, drawPianoGrid } = usePianoroll();
     const { 
@@ -37,8 +38,9 @@ const DrawImage = () => {
         mouseDown, 
         mouseMove, 
         mouseUp, 
-        handleMode 
+        handleMode
     } = useMove();
+
 
 
     useEffect(()=>{
@@ -58,32 +60,6 @@ const DrawImage = () => {
         setPointerCtx(newCtx)
 
     }, [])
-
-    // モード変更時
-    // const modeChange = () => {
-    //     if (mode === "1") {
-    //         // 描く
-    //         $("#input-type-area").show();
-    //         $("#size-area").show();
-    //         $("#transparent-area").show();
-    //         $("#range-area").show();
-    //         $("#color-picker-area").show();
-    //     } else if (mode == "2") {
-    //         // 消しゴム
-    //         $("#input-type-area").hide();
-    //         $("#size-area").show();
-    //         $("#transparent-area").hide();
-    //         $("#range-area").show();
-    //         $("#color-picker-area").hide();
-    //     } else {
-    //         // 画像移動
-    //         $("#input-type-area").hide();
-    //         $("#size-area").hide();
-    //         $("#transparent-area").hide();
-    //         $("#range-area").hide();
-    //         $("#color-picker-area").hide();
-    //     }
-    // };
 
     // 描き込みタイプ変更時
     const handleInputType = (val) => {
@@ -109,6 +85,7 @@ const DrawImage = () => {
         drawPianoGrid(context);
 
         setId("draw")
+        handleChangeFile("")
         ImgtoMidiart("draw", 96, 48)
     }
 

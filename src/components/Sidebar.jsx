@@ -79,7 +79,7 @@ function ResponsiveDrawer(props) {
             <Slider 
                     value={bpm}
                     defaultValue={120}
-                    min={100}
+                    min={60}
                     step={1}
                     max={300} 
                     aria-label="BpmSlider"

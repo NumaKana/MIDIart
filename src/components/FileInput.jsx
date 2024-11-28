@@ -25,10 +25,10 @@ const FileInput = () => {
                 Upload File
             </Button>
         </label>
-        {uploadedfile === "" &&
+        {!uploadedfile &&
             <Typography>画像ファイルをアップロードしてください</Typography>
         }
-        {uploadedfile !== "" &&
+        {uploadedfile &&
             <Box>
                 <Typography>{uploadedfile.value}</Typography>
             </Box>
