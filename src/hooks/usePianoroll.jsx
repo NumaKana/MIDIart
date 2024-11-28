@@ -2,7 +2,7 @@ import useEstimateInfo from "./useEstimateInfo";
 
 let test_music = []
 
-const bpm = 120;
+// const bpm = 120;
 
 let audioContext
 // window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -30,6 +30,7 @@ const usePianoroll = () => {
         length_slider,
         notes, setNotes,
         music, setMusic,
+        bpm
     } = useEstimateInfo();
     let head_x = 0
     let dx = 1
