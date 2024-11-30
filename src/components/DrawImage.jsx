@@ -17,7 +17,8 @@ const DrawImage = () => {
         setId, 
         canvas, 
         context, 
-        handleChangeFile
+        handleChangeFile,
+        drawerWidth
      } = useEstimateInfo();
     const { ImgtoMidiart, resizeCanvasToDisplaySize, drawPianoGrid } = usePianoroll();
     const { 
@@ -59,6 +60,20 @@ const DrawImage = () => {
         newCtx = newCvs.getContext("2d");
         setPointerCtx(newCtx)
 
+        const createjs = window.createjs
+
+        var stage1 = new createjs.Stage("drawCanvas");
+
+        // タッチイベントが有効なブラウザの場合、
+        // CreateJSでタッチイベントを扱えるようにする
+        if (createjs.Touch.isSupported()) {
+            console.log("yes")
+            createjs.Touch.enable(stage1);
+        }else{
+            console.log("no")
+        }
+
+
     }, [])
 
     // 描き込みタイプ変更時
@@ -90,7 +105,8 @@ const DrawImage = () => {
     }
 
     return (
-        <Box sx={{height: String(20 + height +top) + "px", width: String(100 + width +left) + "px", flexGrow: 1, p: 3, margin: "0 0 0 auto"}}>
+        // <Box sx={{height: String(20 + height +top) + "px", width: String(100 + width +left) + "px", flexGrow: 1, p: 3, margin: "0 0 0 auto"}}>
+        <Box sx={{height: String(20 + height +top) + "px", width: { sm: `calc(100% - ${drawerWidth}px)` }, flexGrow: 1, p: 3, margin: "0 0 0 auto"}}>
             <FormControl>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
